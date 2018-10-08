@@ -17,13 +17,13 @@ public class PlatformCatcher : MonoBehaviour
         {
             if(!inContact)
                 return;
-
-            Debug.Log(movement);
             if (character != null)
-                character.Move(movement.x, false, false);
+            {
+                Debug.Log("movement x: " + movement.x);
+                character.GetComponent<Rigidbody2D>().position += movement;
+            }
             else
                 rigidbody.MovePosition(rigidbody.position + movement);
-
         }
     }
 
