@@ -25,7 +25,7 @@ public class Damager : MonoBehaviour {
         if (collider.gameObject.layer == m_CausesDamageTo)
         {
             Health health = collider.gameObject.GetComponent<Health>();
-            health.TakeDamage(m_Damage);
+            health.TakeDamage(m_Damage, gameObject);
         }
     }
 

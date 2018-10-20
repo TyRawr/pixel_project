@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    public int health = 3;
-    public GameObject deathParticleSystem;
+    [SerializeField]
+    protected int health = 3;
+    [SerializeField]
+    protected GameObject deathParticleSystem;
     // Use this for initialization
     protected virtual void Start () {
 		

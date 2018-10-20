@@ -37,10 +37,7 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(1);
-        }
+
         if(Input.GetKeyDown(KeyCode.R))
         {
             this.Respawn();
@@ -86,7 +83,7 @@ public class Health : MonoBehaviour {
         Debug.Log("End Coroutine Invulnerable");
     }
 
-    public void TakeDamage(int damageTaken)
+    public void TakeDamage(int damageTaken, GameObject objectThatDeltDamage)
     {
         if (this.m_Invulnerable) return;
        
@@ -96,6 +93,16 @@ public class Health : MonoBehaviour {
             this.Die();
             this.StopCoroutine(Invulnerable());
             return;
+        }
+
+        //TODO make impact dynamic but also clamped
+        CharacterController2D characterController2D = GetComponent<CharacterController2D>();
+        if (objectThatDeltDamage.transform.position.x > transform.position.x)
+        {
+            characterController2D.Move(-5,false,false);
+        } else
+        {
+            characterController2D.Move(5, false, false);
         }
         StartCoroutine(Invulnerable());
         this.UpdateHealthUI();
@@ -112,6 +119,8 @@ public class Health : MonoBehaviour {
         {
             this.ResetHealth();
             this.transform.position = m_CurrentSpawnPoint.position;
+            StartCoroutine(Invulnerable());
+            UpdateHealthUI();
             //TODO spawn animation trigger
         }
     }

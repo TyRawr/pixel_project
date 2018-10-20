@@ -15,6 +15,7 @@ public class LaserRifleWeapon : MonoBehaviour {
     public CharacterController2D characterController2D;
 
     private GameObject impactEffectClone;
+
     // Use this for initialization
     void Start()
     {
@@ -36,13 +37,13 @@ public class LaserRifleWeapon : MonoBehaviour {
     {
         if (Input.GetButton("Fire1"))
         {
-            Debug.Log("do the shoot!");
             if(updateAndCheckTime())
             {
                 Shoot();
             }
         }
     }
+
 
     private void OnDisable()
     {
@@ -52,8 +53,22 @@ public class LaserRifleWeapon : MonoBehaviour {
     bool updateAndCheckTime()
     {
         cooldownTimer += Time.deltaTime;
-        if(cooldownTimer >= cooldown)
+        if(cooldownTimer > cooldown - Time.deltaTime)
         {
+            //Debug.Log("cooldownTimer " + cooldownTimer);
+            cooldownTimer = 0f; // reset the cooldown timer
+            return true;
+        }
+        return false;
+    }
+
+
+    bool updateAndCheckFixedTime()
+    {
+        cooldownTimer += Time.fixedDeltaTime;
+        if (cooldownTimer > cooldown)
+        {
+            Debug.Log("cooldownTimer " + cooldownTimer);
             cooldownTimer = 0f; // reset the cooldown timer
             return true;
         }
@@ -71,10 +86,12 @@ public class LaserRifleWeapon : MonoBehaviour {
                 Destroy(impactEffectClone); // only one impact at a time
             }
             impactEffectClone = Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
-
-            var enemy = hitInfo.transform.GetComponent<Enemy>();
+            
+            Debug.Log("hit " + hitInfo.collider.gameObject.name);
+            var enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
             if(enemy)
             {
+                DPSObserver.DamageEntry(weaponDamage);
                 enemy.TakeDamage(weaponDamage);
             }
 
@@ -104,7 +121,10 @@ public class LaserRifleWeapon : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        thatGameObject.GetComponent<SpriteRenderer>().enabled = false;
-        GameObject.Destroy(thatGameObject);
+        if (thatGameObject)
+        {
+            thatGameObject.GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Destroy(thatGameObject);
+        }
     }
 }
