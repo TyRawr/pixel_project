@@ -12,7 +12,6 @@ public class Damager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_CausesDamageTo = LayerMask.NameToLayer("Player");
-        Debug.Log(m_CausesDamageTo.value);
     }
 	
 	// Update is called once per frame
