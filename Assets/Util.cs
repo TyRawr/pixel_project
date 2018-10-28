@@ -33,15 +33,20 @@ public static class Util {
         return ray.GetPoint(distance);
     }
 
+    private static bool _rightStickInputActive = false;
+    public static bool RightStickInputActive
+    {
+        get { return _rightStickInputActive;  }
+    }
+
     public static float GetArmAngle(Transform transform)
     {
         string[] joystickNames = Input.GetJoystickNames();
         if(joystickNames != null && joystickNames[0] != string.Empty)
         {
             float horizontal = Input.GetAxis("JoystickHorizontal");
-            //Debug.Log("horizontal " + horizontal);
             float vertical = Input.GetAxis("JoystickVertical");
-            //Debug.Log("vertical " + vertical);
+            _rightStickInputActive = Mathf.Abs(vertical) > 0.1f || Mathf.Abs(horizontal) > 0.1f;
             float angle = Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
             return angle;
         } else

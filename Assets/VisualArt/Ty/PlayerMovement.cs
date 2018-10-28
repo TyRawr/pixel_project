@@ -10,11 +10,18 @@ public class PlayerMovement : MonoBehaviour {
     public float gravity = 40f;
     public float jumpSpeed = 15f;
 
-    protected const float k_GroundedStickingVelocityMultiplier = 3f;
+    
 
+    // private
+    // hover
+    bool wasHovering = false;
+    bool stopHover = false;
+    bool canHover = true;
+
+    // movement and gravity
+    const float k_GroundedStickingVelocityMultiplier = 1f;
     float horizontalMove = 0f;
-    bool jump;
-
+    float m_VerticalGravityModifier;
     Vector2 m_MoveVector = Vector2.zero;
 
     // Use this for initialization
@@ -22,13 +29,9 @@ public class PlayerMovement : MonoBehaviour {
 		
 	}
 
-    bool wasHovering = false;
-    bool stopHover = false;
-    bool hoverInputWasDown = false;
-    bool canHover = true;
+    
     void StopHover()
     {
-        Debug.Log("stop hover");
         stopHover = true;
         wasHovering = false;
     }
@@ -36,31 +39,56 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        //jump
+        UpdateJump();
+        //hover
+        UpdateHover();
+        // movement
+        UpdateMovement();
+    }
+
+    private void UpdateMovement()
+    {
         float horzAxisRaw = Input.GetAxisRaw("Horizontal");
         bool horzInputGiven = Mathf.Abs(horzAxisRaw) > 0;
         horizontalMove = horzInputGiven ? Mathf.Sign(horzAxisRaw) * runSpeed : 0;
-
-
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));
-        if(Input.GetButtonDown("Jump") && controller.Grounded) // maybe double jump logic
+
+        // grounded Horizontal Movement
+        m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, horizontalMove, 100 /* ground accel/decel */ * Time.deltaTime);
+
+        m_MoveVector.y -= gravity * Time.deltaTime * m_VerticalGravityModifier;
+
+        if (controller.Grounded)
         {
-            Debug.Log("Jump");
-            //jump = true;
+            if (m_MoveVector.y < -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier)
+            {
+                m_MoveVector.y = -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier;
+            }
+        }
+    }
+
+    private bool UpdateJump()
+    {
+        if (Input.GetButtonDown("Jump") && controller.Grounded) // maybe double jump logic
+        {
             animator.SetBool("isJumping", true);
             SetVerticalMovement(jumpSpeed);
+            return true;
         }
+        return false;
+    }
 
+    private void UpdateHover()
+    {
         // hover logic
-        float verticalGravityMultiplier = 1f;
-        
         bool hoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2");// Input.GetAxis("Fire2") > 0;
         bool hoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2");
         bool hoverInput = Input.GetAxis("Fire2") > 0.1f;
 
         //cancel hover
-        if(hoverInputKeyUp)
+        if (hoverInputKeyUp)
         {
-            Debug.Log("hoverInputKeyUp");
             StopHover();
             canHover = true;
         }
@@ -71,39 +99,23 @@ public class PlayerMovement : MonoBehaviour {
             Invoke("StopHover", 1f); // hover should not last longer than 1 second
             wasHovering = true; // true for this frame
             canHover = false;
-            SetVerticalMovement(0f);
+            SetVerticalMovement(1f);
         }
-        if(wasHovering)
+        if (wasHovering)
         {
-            verticalGravityMultiplier = 0f;
+            m_VerticalGravityModifier = 0f;
+        } else
+        {
+            m_VerticalGravityModifier = 1f;
         }
-        
         // end hover logic
-
-
-        // grounded Horizontal Movement
-        m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, horizontalMove, 100 /* ground accel/decel */ * Time.deltaTime);
-
-        m_MoveVector.y -= gravity * Time.deltaTime * verticalGravityMultiplier;
-
-        if(controller.Grounded)
-        {
-            if (m_MoveVector.y < -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier)
-            {
-                m_MoveVector.y = -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier;
-            }
-        }
-        
     }
 
 
 
     private void FixedUpdate()
     {
-        //Vector2 movement = new Vector2(horizontalMove * Time.deltaTime, 0f);
-        //Debug.Log("move via input: " + movement);
         controller.Move(m_MoveVector * Time.fixedDeltaTime);
-        jump = false;
     }
 
     public void OnLanding()

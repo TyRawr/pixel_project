@@ -38,12 +38,12 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
     IEnumerator Invulnerable()
     {
         this.m_Invulnerable = true;
-        Debug.Log("Start Coroutine Invulnerable");
         Dictionary<SpriteRenderer, Color> spriteColorMap = new Dictionary<SpriteRenderer, Color>();
         foreach(SpriteRenderer sr in m_SpriteRenderer)
         {
@@ -76,7 +76,6 @@ public class Health : MonoBehaviour {
             sr.color = spriteColorMap[sr];
         }
         this.m_Invulnerable = false;
-        Debug.Log("End Coroutine Invulnerable");
     }
 
     public void TakeDamage(int damageTaken, GameObject objectThatDeltDamage)
@@ -95,10 +94,10 @@ public class Health : MonoBehaviour {
         CharacterController2D characterController2D = GetComponent<CharacterController2D>();
         if (objectThatDeltDamage.transform.position.x > transform.position.x)
         {
-            characterController2D.Move(-5,false,false);
+            characterController2D.Move(new Vector2(-5f, 0f));
         } else
         {
-            characterController2D.Move(5, false, false);
+            characterController2D.Move(new Vector2(5f, 0f));
         }
         StartCoroutine(Invulnerable());
         this.UpdateHealthUI();
