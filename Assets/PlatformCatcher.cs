@@ -19,8 +19,11 @@ public class PlatformCatcher : MonoBehaviour
                 return;
             if (character != null)
             {
-                Debug.Log("movement x: " + movement.x);
-                character.GetComponent<Rigidbody2D>().position += movement;
+                //Debug.Log("movement x: " + movement.x);
+                character.Move(movement);
+                //character.transform.position = new Vector3(character.transform.position.x + movement.x, character.transform.position.y + movement.y, 0f);
+                //Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
+                //rb.position += movement;
             }
             else
                 rigidbody.MovePosition(rigidbody.position + movement);

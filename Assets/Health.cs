@@ -14,6 +14,7 @@ public class Health : MonoBehaviour {
     [SerializeField] private Color m_DamageTakenColor = Color.red;
     [SerializeField] private bool m_Invulnerable;
     [SerializeField] private float m_InvulnerableTime = 1f;
+    [SerializeField] private MainMenu mainMenu;
 
     public Transform m_CurrentSpawnPoint;
 
@@ -37,11 +38,6 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            this.Respawn();
-        }
 	}
 
     IEnumerator Invulnerable()
@@ -110,7 +106,8 @@ public class Health : MonoBehaviour {
 
     public void Die()
     {
-        this.Respawn();
+        MainMenu.BringUpMenu(mainMenu);
+        //this.Respawn();
     }
 
     public void Respawn()

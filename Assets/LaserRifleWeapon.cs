@@ -35,7 +35,7 @@ public class LaserRifleWeapon : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") || Input.GetAxis("Fire1") > 0)
         {
             if(updateAndCheckTime())
             {

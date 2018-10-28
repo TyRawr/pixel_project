@@ -12,14 +12,23 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+
+    Vector2 m_NextMovement = Vector2.zero;
+    Vector2 m_PreviousPosition = Vector2.zero;
+    Vector2 m_CurrentPosition = Vector2.zero;
+
     public Transform arm;
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+
+    public bool Grounded
+    {
+        get { return m_Grounded;  }
+    }
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-    private Vector3 m_Velocity = Vector3.zero;
 
     [Header("Events")]
     [Space]
@@ -62,8 +71,19 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+        m_PreviousPosition = m_Rigidbody2D.position;
+        m_CurrentPosition = m_PreviousPosition + m_NextMovement;
+
+        m_Rigidbody2D.MovePosition(m_CurrentPosition);
+        m_NextMovement = Vector2.zero;
     }
 
+    
+
+    public void Move(Vector2 movement)
+    {
+        m_NextMovement += movement;
+    }
 
     public void Move(float move, bool crouch, bool jump)
     {
@@ -110,10 +130,13 @@ public class CharacterController2D : MonoBehaviour
                 }
             }
 
+
             // Move the character by finding the target velocity
-            Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+            //Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+            //Debug.Log("move " + move.ToString("0.0000"));
+            
             // And then smoothing it out and applying it to the character
-            m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+            //m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
         }
         // If the player should jump...
