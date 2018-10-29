@@ -73,6 +73,8 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && controller.Grounded) // maybe double jump logic
         {
             animator.SetBool("isJumping", true);
+            Debug.Log("Set Vertical Movement " + jumpSpeed);
+            StopHover();
             SetVerticalMovement(jumpSpeed);
             return true;
         }
@@ -99,6 +101,7 @@ public class PlayerMovement : MonoBehaviour {
             Invoke("StopHover", 1f); // hover should not last longer than 1 second
             wasHovering = true; // true for this frame
             canHover = false;
+            Debug.Log("St Hover " + 1);
             SetVerticalMovement(1f);
         }
         if (wasHovering)
