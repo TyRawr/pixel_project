@@ -127,4 +127,24 @@ public class PlayerMovement : MonoBehaviour {
     {
         m_MoveVector.y = newVerticalMovement;
     }
+
+    public void SetHorizontalMovement(float newHorizontalMovement)
+    {
+        m_MoveVector.x = newHorizontalMovement;
+    }
+
+    public void AddToMovement(Vector2 additionalMovement)
+    {
+        m_MoveVector += additionalMovement;
+    }
+
+    public void AddToHorizontalMovement(float additionalHorizontalMovement)
+    {
+        m_MoveVector.x += additionalHorizontalMovement;
+    }
+
+    public void AddToVertialMovement(float additionalVerticalMovement)
+    {
+        m_MoveVector.y += additionalVerticalMovement;
+    }
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
     public static void BringUpMenu(MainMenu mainMenu)
     {
         mainMenu.gameObject.SetActive(true);
-
     }
 
     private Button[] buttons;
@@ -19,55 +19,36 @@ public class MainMenu : MonoBehaviour {
 
     [SerializeField] private int activeFontSize = 20; // size in px
     [SerializeField] private Color activeFontColor = new Color(255f, 255f, 255f);
-    void SetButtonActive(int index)
-    {
-        GameObject buttonLocations = GameObject.Find("Canvas UI/MainMenu/items");
-        for (int i = 0; i < buttonLocations.transform.childCount; i++)
-        {
-            //BaseEventData bed = new BaseEventData();
-
-            Button btn = buttonLocations.transform.GetChild(i).GetComponent<Button>();
-            Text btntxt = btn.gameObject.GetComponent<Text>();
-            btntxt.fontSize = defaultFontSize;
-            SetButtonNotActive(btn);
-        }
-        //GameObject buttonLocations = GameObject.Find("Canvas UI/MainMenu/items");
-        Button currentButton = buttonLocations.transform.GetChild(activeButtonIndex).GetComponent<Button>();
-        Text currentButtonText = currentButton.gameObject.GetComponent<Text>();
-        currentButtonText.fontSize = activeFontSize;
-        currentButton.OnSelect(null);
-
-
-        /*
-        ColorBlock cb = button.colors;
-       
-        currentButtonText.fontSize = activeFontSize;
-        currentButtonText.color = activeFontColor;
-        */
-    }
-
     [SerializeField] private int defaultFontSize = 14; // size in px
     [SerializeField] private Color defaultFontColor = new Color(0f, 255f, 9f);
-    void SetButtonNotActive(Button currentButton)
+
+    private Button[] _buttons;
+
+    void SetButtonActive(int index)
     {
-        currentButton.OnDeselect(null);
-        //currentButton.OnDeselect();
-        /*
-        ColorBlock cb = currentButton.colors;
-        Text currentButtonText = currentButton.gameObject.GetComponent<Text>();
-        currentButtonText.fontSize = defaultFontSize;
-        cb.normalColor = defaultFontColor;
-        */
+        for (int i = 0; i < _buttons.Length; i++)
+        {
+            Button currentButton = _buttons[i];
+            Text btntxt = currentButton.gameObject.GetComponent<Text>();
+            btntxt.fontSize = defaultFontSize;
+        }
+        //GameObject buttonLocations = GameObject.Find("Canvas UI/MainMenu/items");
+        Button activeButton = _buttons[activeButtonIndex];
+        Text currentButtonText = activeButton.gameObject.GetComponent<Text>();
+        currentButtonText.fontSize = activeFontSize;
     }
+
 
     void Awake()
     {
         GameObject buttonLocations = GameObject.Find("Canvas UI/MainMenu/items");
+        _buttons = buttonLocations.GetComponentsInChildren<Button>();
         totalChildren = buttonLocations.transform.childCount;
-        for(int i = 0; i < buttonLocations.transform.childCount; i++)
+        for(int i = 0; i < _buttons.Length; i++)
         {
-            Button currentButton = buttonLocations.transform.GetChild(i).GetComponent<Button>();
-            SetButtonNotActive(currentButton);
+            Button currentButton = _buttons[i];
+            Text btntxt = currentButton.gameObject.GetComponent<Text>();
+            btntxt.fontSize = defaultFontSize;
         }
         activeButtonIndex = 0;
         SetButtonActive(activeButtonIndex);
@@ -80,13 +61,7 @@ public class MainMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-       
-        
-        /*
-        Debug.Log("Hello Ciera");
-        Text text = GameObject.Find("resumebutton").GetComponent<Text>();
-        text.text = "Yo T";
-        */
+
 	}
 
     private void OnEnable()
@@ -123,13 +98,12 @@ public class MainMenu : MonoBehaviour {
 
         if(Input.GetButtonDown("Jump"))
         {
-            GameObject buttonLocations = GameObject.Find("Canvas UI/MainMenu/items");
-            Button currentButton = buttonLocations.transform.GetChild(activeButtonIndex).GetComponent<Button>();
-            currentButton.Select();
+            Button currentButton = _buttons[activeButtonIndex];
+            Debug.LogWarning("Select Button " + currentButton.name);
+            currentButton.onClick.Invoke();
         }
 
         if (!canGoDown) return;
-        Debug.Log("accepting events");
         if(Input.GetAxis("Vertical") < -0.2)
         {
             currentTimer = 0f;
@@ -158,15 +132,13 @@ public class MainMenu : MonoBehaviour {
             }
             SetButtonActive(activeButtonIndex);
         }
-	}
+        Debug.Log("menu button index " + activeButtonIndex);
+    }
 
     public void Respawn()
     {
-        Transform ty =Util.FindPlayer();
-        Health health = ty.GetComponent<Health>();
-        health.Respawn();
-        ResumeGame();
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
     }
-
 
 }

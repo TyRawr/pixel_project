@@ -19,10 +19,12 @@ public class Health : MonoBehaviour {
     public Transform m_CurrentSpawnPoint;
 
     private Transform m_HeartsContainer_UI;
+    private PlayerMovement m_PlayerMovement;
 
     void Awake()
     {
         m_HeartsContainer_UI = GameObject.Find("Canvas UI/Health Container/Hearts").transform;
+        m_PlayerMovement = GetComponent<PlayerMovement>();
     }
 
     // Use this for initialization
@@ -91,14 +93,14 @@ public class Health : MonoBehaviour {
         }
 
         //TODO make impact dynamic but also clamped
-        CharacterController2D characterController2D = GetComponent<CharacterController2D>();
         if (objectThatDeltDamage.transform.position.x > transform.position.x)
         {
-            characterController2D.Move(new Vector2(-5f, 0f));
+            m_PlayerMovement.AddToHorizontalMovement(-20f);
         } else
         {
-            characterController2D.Move(new Vector2(5f, 0f));
+            m_PlayerMovement.AddToHorizontalMovement(20f);
         }
+
         StartCoroutine(Invulnerable());
         this.UpdateHealthUI();
     }
