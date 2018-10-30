@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 20378862672344148}
   - component: {fileID: 81958511185042596}
   - component: {fileID: 114374431789670146}
+  - component: {fileID: 114863477083661850}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -65,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1683864685158662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: -4.09, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4459315606247248}
@@ -193,3 +194,21 @@ MonoBehaviour:
   blendDistance: 9.72
   weight: 1
   priority: 0
+--- !u!114 &114863477083661850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683864685158662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba898a2c201047345bcf92e07bb98ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 0}
+  offset: {x: 0, y: 1, z: -8}
+  smoothTime: 0.5
+  minZoom: 70
+  maxZoom: 70
+  zoomLimiter: 7

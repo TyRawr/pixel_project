@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 95192258269338310}
   - component: {fileID: 114468390664237036}
   - component: {fileID: 114845115594458806}
+  - component: {fileID: 60359982571278690}
   m_Layer: 10
   m_Name: Ty
   m_TagString: Untagged
@@ -185,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1865374902614778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.88, y: -0.5, z: 0}
+  m_LocalPosition: {x: -8.356, y: -0.534, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4844539641119794}
@@ -331,7 +332,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 2
   m_SleepingMode: 1
@@ -345,13 +346,41 @@ CircleCollider2D:
   m_GameObject: {fileID: 1865374902614778}
   m_Enabled: 1
   m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.04, y: -0.035}
+  serializedVersion: 2
+  m_Radius: 0.16
+--- !u!60 &60359982571278690
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865374902614778}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 6200000, guid: 849be1fa5b9791e44a29edfc3aa2ce07, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04, y: 0.015}
-  serializedVersion: 2
-  m_Radius: 0.2053051
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.23076923}
+    oldSize: {x: 0.625, y: 0.8125}
+    newSize: {x: 0.625, y: 0.8125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.24203777, y: 0.09196398}
+      - {x: -0.18527412, y: -0.10588586}
+      - {x: 0.10326862, y: -0.10822594}
+      - {x: 0.15987062, y: 0.093769014}
 --- !u!61 &61834575989029256
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -375,7 +404,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.37, y: 0.5309558}
+  m_Size: {x: 0.4, y: 0.5309558}
   m_EdgeRadius: 0
 --- !u!95 &95192258269338310
 Animator:
@@ -423,7 +452,7 @@ MonoBehaviour:
     type: 2}
   lineRenderer: {fileID: 120516197975464090}
   weaponDamage: 1
-  cooldown: 0.1
+  cooldown: 0.2
   characterController2D: {fileID: 114604128781535562}
 --- !u!114 &114357736015788540
 MonoBehaviour:
@@ -467,7 +496,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 95192258269338310}
   controller: {fileID: 114604128781535562}
-  runSpeed: 40
+  runSpeed: 7
+  gravity: 40
+  jumpSpeed: 15
 --- !u!114 &114468390664237036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -490,6 +521,7 @@ MonoBehaviour:
   m_DamageTakenColor: {r: 1, g: 0, b: 0, a: 1}
   m_Invulnerable: 0
   m_InvulnerableTime: 0.5
+  mainMenu: {fileID: 0}
   m_CurrentSpawnPoint: {fileID: 0}
 --- !u!114 &114604128781535562
 MonoBehaviour:
@@ -502,9 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655bbfcd02a96347b1041f740623b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 800
   m_CrouchSpeed: 0.36
-  m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
@@ -512,7 +542,6 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4608658611792448}
   m_CeilingCheck: {fileID: 4844539641119794}
   m_CrouchDisableCollider: {fileID: 0}
-  m_Grounded: 0
   arm: {fileID: 4883317847978208}
   OnLandEvent:
     m_PersistentCalls:
