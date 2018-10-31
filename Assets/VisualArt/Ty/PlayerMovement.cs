@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         stopHover = true;
         wasHovering = false;
+        CancelInvoke("StopHover");
     }
 
 
@@ -86,7 +87,7 @@ public class PlayerMovement : MonoBehaviour {
         // hover logic
         bool hoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2");// Input.GetAxis("Fire2") > 0;
         bool hoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2");
-        bool hoverInput = Input.GetAxis("Fire2") > 0.1f;
+        bool hoverInput = Input.GetAxis("Fire2") > 0.5f;
 
         //cancel hover
         if (hoverInputKeyUp)
@@ -98,11 +99,12 @@ public class PlayerMovement : MonoBehaviour {
         //start hover
         if (hoverInputKeyDown && canHover)
         {
-            Invoke("StopHover", 1f); // hover should not last longer than 1 second
+           
+            Invoke("StopHover", 2f); // hover should not last longer than 1 second
             wasHovering = true; // true for this frame
             canHover = false;
             Debug.Log("St Hover " + 1);
-            SetVerticalMovement(1f);
+            SetVerticalMovement(.5f);
         }
         if (wasHovering)
         {

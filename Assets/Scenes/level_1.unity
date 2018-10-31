@@ -315,6 +315,21 @@ Prefab:
       propertyPath: targets.Array.data[0]
       value: 
       objectReference: {fileID: 1464687590}
+    - target: {fileID: 114863477083661850, guid: 6d04869996552f34c9670aaabc688465,
+        type: 2}
+      propertyPath: smoothTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114863477083661850, guid: 6d04869996552f34c9670aaabc688465,
+        type: 2}
+      propertyPath: offset.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114863477083661850, guid: 6d04869996552f34c9670aaabc688465,
+        type: 2}
+      propertyPath: offset.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d04869996552f34c9670aaabc688465, type: 2}
   m_IsPrefabAsset: 0
@@ -435,6 +450,10 @@ Prefab:
     - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
       propertyPath: m_Name
       value: Mini Goo (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
@@ -6265,6 +6284,10 @@ Prefab:
       propertyPath: m_Name
       value: Mini Goo (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
   m_IsPrefabAsset: 0
@@ -6364,6 +6387,10 @@ Prefab:
     - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
       propertyPath: m_Name
       value: Mini Goo (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
@@ -6802,7 +6829,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4407972004864094, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -29.644726
+      value: -37.29
       objectReference: {fileID: 0}
     - target: {fileID: 4407972004864094, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
       propertyPath: m_LocalPosition.y
@@ -6836,6 +6863,20 @@ Prefab:
       propertyPath: m_Name
       value: Mini Goo (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114699182488644108, guid: 3cb98e95e4965af479dae38cbb2db599,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114699182488644108, guid: 3cb98e95e4965af479dae38cbb2db599,
+        type: 2}
+      propertyPath: health
+      value: 30000000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
   m_IsPrefabAsset: 0
@@ -6848,11 +6889,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4029343110704100, guid: 431edd8a8215be44199a9bed4dd8d163, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 38.47
       objectReference: {fileID: 0}
     - target: {fileID: 4029343110704100, guid: 431edd8a8215be44199a9bed4dd8d163, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 4029343110704100, guid: 431edd8a8215be44199a9bed4dd8d163, type: 2}
       propertyPath: m_LocalPosition.z
@@ -6929,6 +6970,15 @@ Prefab:
     - target: {fileID: 4310072569421600, guid: e578b237314d96b4796b7ec4925cc573, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512673431174798, guid: e578b237314d96b4796b7ec4925cc573, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114323239498074260, guid: e578b237314d96b4796b7ec4925cc573,
+        type: 2}
+      propertyPath: health
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e578b237314d96b4796b7ec4925cc573, type: 2}
@@ -7264,6 +7314,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1502763358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1683864685158662, guid: 6d04869996552f34c9670aaabc688465,
+    type: 2}
+  m_PrefabInternal: {fileID: 56558823}
+--- !u!114 &1502763359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1502763358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 65
+  m_RefResolutionX: 1024
+  m_RefResolutionY: 576
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!4 &1590487715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4407972004864094, guid: 3cb98e95e4965af479dae38cbb2db599,
@@ -53960,6 +54034,10 @@ Prefab:
     - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
       propertyPath: m_Name
       value: Mini Goo (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686785113826626, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb98e95e4965af479dae38cbb2db599, type: 2}

@@ -27,10 +27,12 @@ public class Arm : MonoBehaviour {
             }
         }
 
-        float rot_z = Util.GetArmAngle(transform);
+        float rot_z = Util.FindNearestEnemyToLine(transform);
+        //Debug.Log("rotz: " + rot_z);
         if (Util.RightStickInputActive)
         {
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
+        Util.FindNearestEnemyToLine(transform);
     }
 }

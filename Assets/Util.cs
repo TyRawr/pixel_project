@@ -39,6 +39,79 @@ public static class Util {
         get { return _rightStickInputActive;  }
     }
 
+    private static Vector2 _oldRightJoystickInputVector;
+    public static float FindNearestEnemyToLine(Transform self)
+    {
+        MultipleTargetCamera mtc = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MultipleTargetCamera>();
+        string[] joystickNames = Input.GetJoystickNames();
+        if (joystickNames != null && joystickNames[0] != string.Empty)
+        {
+            
+
+            float horizontal = Input.GetAxis("JoystickHorizontal");
+            float vertical = Input.GetAxis("JoystickVertical");
+            
+
+            Vector3 rayOrigin = self.position;
+            Vector3 rayDirection = new Vector3(horizontal, vertical, 0f);
+            rayDirection.Normalize();
+            GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
+            Enemy[] enemies = new Enemy[enemyObjects.Length];
+            Vector3 vectToEnemy = Vector3.negativeInfinity;
+            float smallestDistance = float.PositiveInfinity;
+            for (int i = 0; i < enemyObjects.Length; i++)
+            {
+                Enemy e = enemies[i] = enemyObjects[i].GetComponent<Enemy>();
+
+                Vector3 point = e.transform.position;
+
+                Vector3 vectorToEnemy = (point - self.position);
+                vectorToEnemy.Normalize();
+
+                Vector3 proj = Vector3.Project(vectorToEnemy, rayDirection);
+                //Debug.Log("proj: " + proj);
+
+                float dot = Vector3.Dot(rayDirection, vectorToEnemy);
+                Debug.DrawRay(rayOrigin, 10 * rayDirection, Color.yellow);
+                Debug.Log("dot " + Vector3.Dot(rayDirection, vectorToEnemy));
+                if (dot > .985)
+                {
+                    //snap to target
+                    float dToEnemy = Mathf.Abs(e.transform.position.x - self.position.x);
+                    Debug.Log("dist to enemy: " + dToEnemy);
+                    if(dToEnemy < 8 && dot * dToEnemy < smallestDistance)
+                    {
+                        vectToEnemy = vectorToEnemy;
+                        smallestDistance = dToEnemy;
+                    }
+                }
+                float distance = Vector3.Distance(rayOrigin, point);
+                float angle = Vector3.Angle(rayDirection, point - rayOrigin);
+                float dist = (distance * Mathf.Sin(angle * Mathf.Deg2Rad));
+                Debug.Log("dist " + dist);
+
+            }
+            _rightStickInputActive = Mathf.Abs(vertical) > 0.1f || Mathf.Abs(horizontal) > 0.1f;
+            if (_rightStickInputActive)
+            {
+                _oldRightJoystickInputVector = new Vector2(horizontal, vertical);
+                _oldRightJoystickInputVector.Normalize(); 
+            }
+            mtc.offset = new Vector3 (_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
+            if (vectToEnemy.z > -10f)
+            {
+                //something was set
+
+                return Mathf.Atan2(vectToEnemy.y, vectToEnemy.x) * Mathf.Rad2Deg;
+            }
+            mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
+            return Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
+        }
+        mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
+        _rightStickInputActive = false;
+        return 0f;
+    }
+
     public static float GetArmAngle(Transform transform)
     {
         string[] joystickNames = Input.GetJoystickNames();
@@ -46,6 +119,7 @@ public static class Util {
         {
             float horizontal = Input.GetAxis("JoystickHorizontal");
             float vertical = Input.GetAxis("JoystickVertical");
+
             _rightStickInputActive = Mathf.Abs(vertical) > 0.1f || Mathf.Abs(horizontal) > 0.1f;
             float angle = Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
             return angle;
