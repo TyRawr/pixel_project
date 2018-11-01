@@ -17,7 +17,7 @@ public class CharacterController2D : MonoBehaviour
 
     public Transform arm;
 
-    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .15f; // Radius of the overlap circle to determine if grounded
 
     public bool Grounded
     {

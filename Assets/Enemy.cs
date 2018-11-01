@@ -18,6 +18,16 @@ public class Enemy : MonoBehaviour {
 		
 	}
 
+    protected virtual void WakeUp()
+    {
+        // probs just wanna override this
+    }
+
+    protected virtual void SleepForTime(float seconds)
+    {
+        Invoke("WakeUp", seconds);
+    }
+
     protected virtual void FixedUpdate()
     {
 

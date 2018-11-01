@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour {
             animator.SetBool("isJumping", true);
             Debug.Log("Set Vertical Movement " + jumpSpeed);
             StopHover();
+
             SetVerticalMovement(jumpSpeed);
             return true;
         }
@@ -104,11 +105,12 @@ public class PlayerMovement : MonoBehaviour {
             wasHovering = true; // true for this frame
             canHover = false;
             Debug.Log("St Hover " + 1);
-            SetVerticalMovement(.5f);
+            //AddToVertialMovement(jumpSpeed*Time.deltaTime);
         }
         if (wasHovering)
         {
-            m_VerticalGravityModifier = 0f;
+            m_VerticalGravityModifier = .3f;
+            //AddToVertialMovement(Time.deltaTime);
         } else
         {
             m_VerticalGravityModifier = 1f;

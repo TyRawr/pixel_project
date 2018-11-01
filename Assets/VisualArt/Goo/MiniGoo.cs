@@ -18,16 +18,42 @@ public class MiniGoo : Enemy
 
     const float k_GroundedRadius = .001f;
 
+    public virtual void ToggleHorizontalForce()
+    {
+        m_HorizontalForce *= -1;
+    } 
 
+    protected override void WakeUp()
+    {
+        base.WakeUp();
+        active = true;
+    }
+
+    private void Awake()
+    {
+        
+    }
+
+    [SerializeField] private float timeToWake = .3f; // seconda
     // Use this for initialization
     protected override void Start()
     {
+        if(timeToWake > 0f)
+        {
+            active = false;
+            SleepForTime(timeToWake);
+        } else
+        {
+            Jump();
+        }
     }
 
+    private bool active = true;
     // Update is called once per frame
     protected override void Update()
     {
         float dt = Time.deltaTime;
+        if (!active) return; // take no action
         timeSinceLastJump += dt;
 
         if (timeSinceLastJump > jumpCooldown)

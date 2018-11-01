@@ -74,30 +74,37 @@ public class LaserRifleWeapon : MonoBehaviour {
         }
         return false;
     }
+    [SerializeField] private LayerMask m_HitMask;
 
     void Shoot()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
+        RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, 1000f, m_HitMask);
+        
         bool hitFoundAndNotPlayer = hitInfo && hitInfo.rigidbody && !(hitInfo.rigidbody.gameObject.layer == LayerMask.NameToLayer("Player"));
         if(hitFoundAndNotPlayer)
         {
-            if(impactEffectClone)
+
+            if (impactEffectClone)
             {
                 Destroy(impactEffectClone); // only one impact at a time
             }
             impactEffectClone = Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
             
             Debug.Log("hit " + hitInfo.collider.gameObject.name);
+            Vector2 hit_point = hitInfo.point;
             var enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
             if(enemy)
             {
                 DPSObserver.DamageEntry(weaponDamage);
                 enemy.TakeDamage(weaponDamage);
+            } else
+            {
+                //Debug.Log(hitInfo.rigidbody.name);
             }
 
             StartCoroutine(RunImpactEffect(impactEffectClone));
             lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, hitInfo.point);
+            lineRenderer.SetPosition(1, hit_point);
         }
         else
         {
