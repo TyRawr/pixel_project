@@ -7080,7 +7080,7 @@ Prefab:
     - target: {fileID: 114177896488352540, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
       propertyPath: cooldown
-      value: 0.07
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 61834575989029256, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
@@ -55096,7 +55096,7 @@ Prefab:
     - target: {fileID: 114699182488644108, guid: 3cb98e95e4965af479dae38cbb2db599,
         type: 2}
       propertyPath: health
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 61443952927950570, guid: 3cb98e95e4965af479dae38cbb2db599,
         type: 2}
