@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour {
 
     public List<GameObject> weapons;
-
+    private int _active_index;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,6 +13,7 @@ public class WeaponManager : MonoBehaviour {
 	
     void SetWeaponAtIndexActive(int index)
     {
+        _active_index = index;
         weapons[index].SetActive(true);
     }
 
@@ -24,9 +25,9 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
-	// handle weapon swapping
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.Alpha1))
+    // handle weapon swapping
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetAllWeaponsInactive();
             SetWeaponAtIndexActive(1 - 1);
@@ -36,5 +37,22 @@ public class WeaponManager : MonoBehaviour {
             SetAllWeaponsInactive();
             SetWeaponAtIndexActive(2 - 1);
         }
+        if (Input.GetButtonDown("WeaponSwap"))
+        {
+            int newIndex = ToggleWeaponIndex(_active_index) ;
+            Debug.Log("WeaponSwap " + newIndex);
+            SetAllWeaponsInactive();
+            SetWeaponAtIndexActive(newIndex);
+        }
+    }
+
+    int ToggleWeaponIndex(int currentIndex)
+    {
+        // too high to math this
+        if(currentIndex == 0)
+        {
+            return 1;
+        }
+        return 0;
     }
 }
