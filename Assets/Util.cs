@@ -44,10 +44,10 @@ public static class Util {
     {
         MultipleTargetCamera mtc = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MultipleTargetCamera>();
         string[] joystickNames = Input.GetJoystickNames();
-        if (joystickNames != null && joystickNames[0] != string.Empty)
+        HashSet<string> joystickNamesList = new HashSet<string>(joystickNames);
+        joystickNamesList.Remove("");
+        if (joystickNamesList != null && joystickNamesList.Count > 0)
         {
-            
-
             float horizontal = Input.GetAxis("JoystickHorizontal");
             float vertical = Input.GetAxis("JoystickVertical");
             
@@ -92,6 +92,10 @@ public static class Util {
                 
 
             }
+            if(enemyObjects.Length == 0)
+            {
+                
+            }
             _rightStickInputActive = Mathf.Abs(vertical) > 0.1f || Mathf.Abs(horizontal) > 0.1f;
             if (_rightStickInputActive)
             {
@@ -107,6 +111,13 @@ public static class Util {
             }
             mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
             return Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
+        } else
+        {
+            Vector3 diff = GetWorldPositionOnPlane(Input.mousePosition, 0) - self.position;
+            diff.Normalize();
+
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            return rot_z;
         }
         mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
         _rightStickInputActive = false;
