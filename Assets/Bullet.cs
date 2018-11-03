@@ -33,8 +33,9 @@ public class Bullet : MonoBehaviour {
             direction = weaponTransform.right;
         }
 
+        Vector2 mod_direction = (direction / 5);
         
-        RaycastHit2D hitInfo = Physics2D.Raycast(m_LastPosition - direction, direction, 1f, LayerMask.GetMask("Platform"));
+        RaycastHit2D hitInfo = Physics2D.Raycast(m_LastPosition - mod_direction, direction, .5f, LayerMask.GetMask("Platform"));
         
         bool hitFoundAndNotPlayer = hitInfo && hitInfo.rigidbody &&
             hitInfo.rigidbody.gameObject != this.gameObject
@@ -51,7 +52,7 @@ public class Bullet : MonoBehaviour {
             GameObject.Destroy(gameObject);
             return;
         }
-        Debug.DrawRay(m_LastPosition - direction, direction, Color.magenta, .1f);
+        Debug.DrawRay(m_LastPosition - mod_direction, direction, Color.magenta, .4f);
 
         m_LastPosition = currentPosition;
     }
