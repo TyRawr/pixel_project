@@ -14,6 +14,33 @@ public static class Util {
         return GameObject.Find("Ty").transform;
     }
 
+
+    public static bool UsingJoystick
+    {
+        get
+        {
+            return _usingJoystick;
+        }
+    }
+
+    private static bool _usingJoystick;
+    /// <summary>
+    /// Try to only use this function once, get the variable UsingJoystick for every frame need of this call.
+    /// If they have joystick plugged in, just use that over keyboard mouse.
+    /// </summary>
+    /// <returns></returns>
+    public static bool JoystickEnabled()
+    {
+        HashSet<string> joysticknames = new HashSet<string>( Input.GetJoystickNames() );
+        joysticknames.Remove(""); // other things in this list might be bad, filter out bad
+        if(joysticknames.Count > 0)
+        {
+            _usingJoystick = true;
+            return true;
+        }
+        return false;
+    }
+
     public static Quaternion LookAt2D(Transform self, Transform target)
     {
         Vector2 selfVec2D = new Vector2(self.position.x, self.position.y);

@@ -212,7 +212,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!82 &82279095600056134
 AudioSource:
@@ -376,7 +376,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDamage: 1
   speed: 10
-  rigidbody2D: {fileID: 50603745595982896}
+  m_CollideWith:
+    serializedVersion: 2
+    m_Bits: 2560
 --- !u!198 &198052955586652294
 ParticleSystem:
   m_ObjectHideFlags: 1

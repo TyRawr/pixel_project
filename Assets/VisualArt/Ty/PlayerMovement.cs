@@ -50,8 +50,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void UpdateMovement()
     {
-        float horzAxisRaw = Input.GetAxis("Horizontal");
-        Debug.Log(horzAxisRaw);
+        float horzAxisRaw = Input.GetAxisRaw("Horizontal");
         bool horzInputGiven = Mathf.Abs(horzAxisRaw) > 0.1;
         horizontalMove = horzInputGiven ? Mathf.Sign(horzAxisRaw) * runSpeed : 0;
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));

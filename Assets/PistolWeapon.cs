@@ -11,6 +11,7 @@ public class PistolWeapon : MonoBehaviour
     public int weaponDamage = 1;
     public CharacterController2D characterController2D;
     public float cooldown = .1f; // time in seconds between each fire, this is an automatic weapon
+    public float bulletSpeed = 20f;
     private float cooldownTimer = 0f;
     // Use this for initialization
     void Start()
@@ -49,7 +50,9 @@ public class PistolWeapon : MonoBehaviour
         cooldownTimer = 0f;
         GameObject b = Instantiate(bullet, firePoint.position, Quaternion.identity) as GameObject;
         Rigidbody2D rb = b.GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * 20f;
+        rb.velocity = transform.right * bulletSpeed;
+        Bullet bul = b.GetComponent<Bullet>();
+        bul.SetTransformThatWasShotFrom(transform);
     }
 
 

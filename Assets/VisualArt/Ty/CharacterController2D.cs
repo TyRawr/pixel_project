@@ -83,7 +83,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void UpdateFacing()
     {
-        if(!Util.RightStickInputActive) { return; }
+        //if(!Util.RightStickInputActive) { return; }
         //comes [-1,1]->left,right
         float armRotation = Mathf.Cos(arm.eulerAngles.z * Mathf.Deg2Rad);
         bool faceLeft = armRotation <= 0;
@@ -103,6 +103,8 @@ public class CharacterController2D : MonoBehaviour
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
 
-        transform.Rotate(0f, 180f, 0f);
+        //transform.Rotate(0f, 180f, 0f); // rotate y variable
+        transform.localScale = new Vector3( m_FacingRight ? 1f : -1f , 1f, 1f);
+        arm.transform.localScale = new Vector3(m_FacingRight ? 1f : -1f, 1f, 1f);
     }
 }
