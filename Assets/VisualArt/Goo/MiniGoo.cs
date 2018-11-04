@@ -10,13 +10,13 @@ public class MiniGoo : Enemy
 
     bool jump;
     bool m_Grounded;
-    float jumpCooldown = 2f;
+    [SerializeField] private float jumpCooldown = 2f;
     float timeSinceLastJump = 0f;
     [SerializeField] private float m_HorizontalForce = 50f;
     [SerializeField] private float m_JumpForce = 300f;
     [SerializeField] private LayerMask m_WhatIsGround;
 
-    const float k_GroundedRadius = .001f;
+    const float k_GroundedRadius = .01f;
 
     public virtual void ToggleHorizontalForce()
     {
@@ -67,7 +67,7 @@ public class MiniGoo : Enemy
             m_Grounded = false;
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-
+            Debug.Log("Len: " + colliders.Length);
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
