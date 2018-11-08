@@ -36,6 +36,7 @@ public class Arm : MonoBehaviour {
         if (Util.UsingJoystick && Util.RightStickInputActive)
         {
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+            Debug.DrawRay(transform.position, transform.right, Color.yellow);
         } else if(!Util.UsingJoystick)
         {
             if (faceRight)

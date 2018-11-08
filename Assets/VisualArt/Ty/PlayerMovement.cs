@@ -6,65 +6,104 @@ public class PlayerMovement : MonoBehaviour {
 
     public Animator animator;
     public CharacterController2D controller;
+    public GameObject m_HoverEffect;
     public float runSpeed = 40f;
     public float gravity = 40f;
     public float jumpSpeed = 15f;
+    public float m_HoverResource = 100f;
 
-    
+
 
     // private
     // hover
-    bool wasHovering = false;
-    bool stopHover = false;
-    bool canHover = true;
+    public bool wasHovering = false;
+    public bool stopHover = false;
+    public bool canHover = true;
 
     // movement and gravity
     const float k_GroundedStickingVelocityMultiplier = 1f;
     float horizontalMove = 0f;
-    float m_VerticalGravityModifier;
+    float verticalMove = 0f;
+    public float m_VerticalGravityModifier;
     Vector2 m_MoveVector = Vector2.zero;
 
+
+    float m_HorizontalAxisRaw;
+    float m_VerticalAxisRaw;
+    bool m_HorizontalInputGiven;
+    bool m_VerticalInputGiven;
+    bool m_HoverInputKeyDown;
+    bool m_HoverInputKeyUp;
+    bool m_HoverInput;
     // Use this for initialization
     void Start () {
 		
 	}
 
-    
-    void StopHover()
-    {
-        stopHover = true;
-        wasHovering = false;
-        CancelInvoke("StopHover");
-    }
-
-
 	// Update is called once per frame
 	void Update () {
-        //jump
+        SetInput();
         UpdateJump();
-        //hover
-        UpdateHover();
-        // movement
         UpdateMovement();
+        UpdateHover();
+    }
+
+    private void SetInput()
+    {
+        m_VerticalAxisRaw = Input.GetAxisRaw("Vertical");
+        m_HorizontalAxisRaw = Input.GetAxisRaw("Horizontal");
+        m_VerticalInputGiven = Mathf.Abs(m_VerticalAxisRaw) > .1;
+        m_HorizontalInputGiven = Mathf.Abs(m_HorizontalAxisRaw) > 0.1;
+        m_HoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2");// Input.GetAxis("Fire2") > 0;
+        m_HoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2");
+        m_HoverInput = Input.GetAxis("Fire2") > 0.5f;
+    }
+
+    private void UpdateHover()
+    {
+        if(m_HoverInputKeyUp)
+        {
+            m_VerticalGravityModifier = 1;
+            m_HoverEffect.SetActive(false);
+            
+        }
+        if(m_HoverInput)
+        {
+            if(m_HoverInputKeyDown)
+            {
+                m_VerticalGravityModifier = 0;
+                m_HoverEffect.SetActive(true);
+                Vector2 temp = m_MoveVector;
+                SetVerticalMovement(0);
+            }
+        }
     }
 
     private void UpdateMovement()
     {
-        float horzAxisRaw = Input.GetAxisRaw("Horizontal");
-        bool horzInputGiven = Mathf.Abs(horzAxisRaw) > 0.1;
-        horizontalMove = horzInputGiven ? Mathf.Sign(horzAxisRaw) * runSpeed : 0;
-        animator.SetFloat("speed", Mathf.Abs(horizontalMove));
-
-        // grounded Horizontal Movement
-        m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, horizontalMove, 100 /* ground accel/decel */ * Time.deltaTime);
-
-        m_MoveVector.y -= gravity * Time.deltaTime * m_VerticalGravityModifier;
-
-        if (controller.Grounded)
+        if(m_HoverInput /* and have resource and ability to use hover */)
         {
-            if (m_MoveVector.y < -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier)
+            horizontalMove = m_HorizontalInputGiven ? Mathf.Sign(m_HorizontalAxisRaw) * runSpeed / 2f : 0;
+            verticalMove = m_VerticalInputGiven ? Mathf.Sign(m_VerticalAxisRaw) * runSpeed / 2f * -1f : 0;
+            m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, horizontalMove, 50 /* ground accel/decel */ * Time.deltaTime);
+            m_MoveVector.y = Mathf.MoveTowards(m_MoveVector.y, verticalMove, 50 /* ground accel/decel */ * Time.deltaTime);
+        }
+        else
+        {
+            horizontalMove = m_HorizontalInputGiven ? Mathf.Sign(m_HorizontalAxisRaw) * runSpeed : 0;
+            animator.SetFloat("speed", Mathf.Abs(horizontalMove));
+
+            // grounded Horizontal Movement
+            m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, horizontalMove, 100 /* ground accel/decel */ * Time.deltaTime);
+
+            m_MoveVector.y -= gravity * Time.deltaTime * m_VerticalGravityModifier;
+
+            if (controller.Grounded)
             {
-                m_MoveVector.y = -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier;
+                if (m_MoveVector.y < -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier)
+                {
+                    m_MoveVector.y = -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier;
+                }
             }
         }
     }
@@ -75,50 +114,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             animator.SetBool("isJumping", true);
             //Debug.Log("Set Vertical Movement " + jumpSpeed);
-            StopHover();
-
             SetVerticalMovement(jumpSpeed);
             return true;
         }
         return false;
     }
-
-    private void UpdateHover()
-    {
-        // hover logic
-        bool hoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2");// Input.GetAxis("Fire2") > 0;
-        bool hoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2");
-        bool hoverInput = Input.GetAxis("Fire2") > 0.5f;
-
-        //cancel hover
-        if (hoverInputKeyUp)
-        {
-            StopHover();
-            canHover = true;
-        }
-
-        //start hover
-        if (hoverInputKeyDown && canHover)
-        {
-           
-            Invoke("StopHover", 2f); // hover should not last longer than 1 second
-            wasHovering = true; // true for this frame
-            canHover = false;
-            Debug.Log("St Hover " + 1);
-            //AddToVertialMovement(jumpSpeed*Time.deltaTime);
-        }
-        if (wasHovering)
-        {
-            m_VerticalGravityModifier = .3f;
-            //AddToVertialMovement(Time.deltaTime);
-        } else
-        {
-            m_VerticalGravityModifier = 1f;
-        }
-        // end hover logic
-    }
-
-
 
     private void FixedUpdate()
     {

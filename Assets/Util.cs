@@ -101,7 +101,7 @@ public static class Util {
                 float dot = Vector3.Dot(rayDirection, vectorToEnemy);
                 Debug.DrawRay(rayOrigin, 10 * rayDirection, Color.yellow);
                 //Debug.Log("dot " + Vector3.Dot(rayDirection, vectorToEnemy));
-                if (dot > .95)
+                if (dot > .90)
                 {
                     //snap to target
                     float dToEnemy = Mathf.Abs(e.transform.position.x - self.position.x);
@@ -110,7 +110,7 @@ public static class Util {
                     float angle = Vector3.Angle(rayDirection, point - rayOrigin);
                     float dist = (distance * Mathf.Sin(angle * Mathf.Deg2Rad));
                     //Debug.Log("dist " + dist);
-                    if (dist < .5f && dToEnemy < 12 && dot * dToEnemy < smallestDistance)
+                    if ( dToEnemy < 20 && dot * dToEnemy < smallestDistance)
                     {
                         vectToEnemy = vectorToEnemy;
                         smallestDistance = dToEnemy;

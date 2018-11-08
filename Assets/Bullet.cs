@@ -46,7 +46,6 @@ public class Bullet : MonoBehaviour {
         }
         if (hitFoundAndNotPlayer)
         {
-            Debug.LogError("fucked shit stacked");
             GetComponent<ExplodeOnImpact>().DoExplode();
             
             GameObject.Destroy(gameObject);
