@@ -9,9 +9,17 @@ public static class Util {
         return GameObject.Find(name).transform;
     }
 
+    public static Transform Player
+    {
+        get {
+            return _player;
+        }
+    }
+    private static Transform _player;
     public static Transform FindPlayer() // could be turned into find NEAREST player
     {
-        return GameObject.Find("Ty").transform;
+        _player = GameObject.Find("Ty").transform;
+        return _player;
     }
 
 
