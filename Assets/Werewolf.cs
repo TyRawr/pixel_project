@@ -38,7 +38,7 @@ public class Werewolf : MonoBehaviour {
         Vector2 p = transform.position;
         Vector2 q = player.position;
         Vector2 d =  p - q;
-        Debug.Log("d" + d + "  +++ d.magnitude " + d.magnitude);
+        //Debug.Log("d" + d + "  +++ d.magnitude " + d.magnitude);
         //m_MoveVector.y = Mathf.MoveTowards(m_MoveVector.y, -gravity.y, 50 /* ground accel/decel */ * Time.deltaTime);
         // update action
         bool currentlyChasing = animator.GetBool("Chasing");

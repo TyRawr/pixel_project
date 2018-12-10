@@ -66,6 +66,7 @@ public class LaserRifleWeapon : MonoBehaviour {
     bool updateAndCheckFixedTime()
     {
         cooldownTimer += Time.fixedDeltaTime;
+        Debug.Log(cooldownTimer / cooldown);
         if (cooldownTimer > cooldown)
         {
             Debug.Log("cooldownTimer " + cooldownTimer);

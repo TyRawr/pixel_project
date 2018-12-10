@@ -63,6 +63,9 @@ public class PistolWeapon : MonoBehaviour
     bool updateAndCheckTime()
     {
         cooldownTimer += Time.deltaTime;
+        float progress = Mathf.Clamp(cooldown - cooldownTimer, 0, 1);
+        //Debug.Log(progress);
+        Util.SetUISliderValue(1 - progress);
         if (cooldownTimer >= cooldown )
         {
             _canFire = true;

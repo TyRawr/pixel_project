@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class Util {
 
@@ -213,5 +214,15 @@ public static class Util {
         }
 
         return false;
+    }
+
+    public static Slider _slider = null;
+    public static void SetUISliderValue(float progress)
+    {
+        if(_slider == null)
+        {
+            _slider = GameObject.Find("Canvas UI/Slider").GetComponent<Slider>();
+        }
+        _slider.value = progress;
     }
 }
