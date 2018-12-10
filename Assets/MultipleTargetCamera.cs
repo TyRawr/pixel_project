@@ -48,7 +48,13 @@ public class MultipleTargetCamera : MonoBehaviour {
     {
         Vector3 centerPoint = GetCenterPoint();
         Vector3 newPosition = centerPoint + offset;
+        Vector2 vectorInPixels = new Vector2(
+            Mathf.RoundToInt(newPosition.x * 16),
+            Mathf.RoundToInt(newPosition.y * 16)
+            );
+        //newPosition = vectorInPixels / 16f;
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+        //transform.position = new Vector3( newPosition.x, newPosition.y, -8);
     }
 
     Vector3 GetCenterPoint()
