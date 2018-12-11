@@ -64481,12 +64481,12 @@ Prefab:
     - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
       propertyPath: gravity
-      value: 20
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
       propertyPath: jumpSpeed
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 114177896488352540, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
@@ -64578,7 +64578,7 @@ Prefab:
     - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
         type: 2}
       propertyPath: runSpeed
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1865374902614778, guid: 431edd8a8215be44199a9bed4dd8d163, type: 2}
       propertyPath: m_Name
@@ -64791,6 +64791,21 @@ Prefab:
       propertyPath: controller
       value: 
       objectReference: {fileID: 1864108597}
+    - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
+        type: 2}
+      propertyPath: gravity
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
+        type: 2}
+      propertyPath: jumpSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114429063535843826, guid: 431edd8a8215be44199a9bed4dd8d163,
+        type: 2}
+      propertyPath: runSpeed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 431edd8a8215be44199a9bed4dd8d163, type: 2}
   m_IsPrefabAsset: 0
@@ -65134,7 +65149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1194807295
 Transform:
   m_ObjectHideFlags: 0
@@ -65243,7 +65258,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1512673431174798, guid: e578b237314d96b4796b7ec4925cc573, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 61240728197841634, guid: e578b237314d96b4796b7ec4925cc573,
         type: 2}
@@ -66022,7 +66037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1706721575
 Transform:
   m_ObjectHideFlags: 0
