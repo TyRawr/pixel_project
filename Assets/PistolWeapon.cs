@@ -33,7 +33,7 @@ public class PistolWeapon : MonoBehaviour
     void Update()
     {
         updateAndCheckTime();
-        if (_canFire && (Input.GetButton("Fire1") || Input.GetAxis("Fire1") > 0)  )
+        if (_canFire && (InputManager.GetButton("Fire1", characterController2D) || InputManager.GetAxis("Fire1", characterController2D) > 0)  )
         {
              ShootBullet();
         }

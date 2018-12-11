@@ -96,7 +96,7 @@ public class MainMenu : MonoBehaviour {
             canGoDown = true;
         }
 
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump1"))
         {
             Button currentButton = _buttons[activeButtonIndex];
             Debug.LogWarning("Select Button " + currentButton.name);
@@ -104,7 +104,7 @@ public class MainMenu : MonoBehaviour {
         }
 
         if (!canGoDown) return;
-        if(Input.GetAxis("Vertical") < -0.2)
+        if(Input.GetAxis("Vertical1") < -0.2)
         {
             currentTimer = 0f;
             canGoDown = false;
@@ -118,7 +118,7 @@ public class MainMenu : MonoBehaviour {
             }
             SetButtonActive(activeButtonIndex);
         }
-        if(Input.GetAxis("Vertical") > .2)
+        if(Input.GetAxis("Vertical1") > .2)
         {
             currentTimer = 0f;
             canGoDown = false;

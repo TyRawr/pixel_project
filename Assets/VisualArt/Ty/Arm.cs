@@ -8,10 +8,12 @@ public class Arm : MonoBehaviour {
 	void Start () {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         Util.JoystickEnabled();
+        player = transform.parent.parent.GetComponent<CharacterController2D>();
     }
 
     public Camera playerCamera;
     private Vector2 worldMousePos;
+    private CharacterController2D player;
 	// Update is called once per frame
 	void Update () {
         float armRotationX = Mathf.Cos(transform.eulerAngles.z * Mathf.Deg2Rad);
@@ -31,7 +33,7 @@ public class Arm : MonoBehaviour {
             
         }
 
-        float rot_z = Util.FindNearestEnemyToLine(transform);
+        float rot_z = Util.FindNearestEnemyToLine(transform, player);
         //Debug.Log("rotz: " + rot_z);
         if (Util.UsingJoystick && Util.RightStickInputActive)
         {
@@ -49,7 +51,7 @@ public class Arm : MonoBehaviour {
             }
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
-        Util.FindNearestEnemyToLine(transform);
+        Util.FindNearestEnemyToLine(transform, player);
     }
 
 }

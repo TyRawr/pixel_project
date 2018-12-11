@@ -50,13 +50,13 @@ public class PlayerMovement : MonoBehaviour {
 
     private void SetInput()
     {
-        m_VerticalAxisRaw = Input.GetAxisRaw("Vertical");
-        m_HorizontalAxisRaw = Input.GetAxisRaw("Horizontal");
+        m_VerticalAxisRaw = InputManager.GetAxisRaw("Vertical", controller);
+        m_HorizontalAxisRaw = InputManager.GetAxisRaw("Horizontal", controller);
         m_VerticalInputGiven = Mathf.Abs(m_VerticalAxisRaw) > .1;
         m_HorizontalInputGiven = Mathf.Abs(m_HorizontalAxisRaw) > 0.1;
-        m_HoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2");// Input.GetAxis("Fire2") > 0;
-        m_HoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2");
-        m_HoverInput = Input.GetAxis("Fire2") > 0.5f;
+        m_HoverInputKeyDown = Util.GetAxisInputLikeOnKeyDown("Fire2", controller);// InputManager.GetAxis("Fire2") > 0;
+        m_HoverInputKeyUp = Util.GetAxisInputLikeOnKeyUp("Fire2",controller);
+        m_HoverInput = InputManager.GetAxis("Fire2", controller) > 0.5f;
     }
 
     private void UpdateHover()
@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool UpdateJump()
     {
-        if (Input.GetButtonDown("Jump") && controller.Grounded) // maybe double jump logic
+        if (InputManager.GetButtonDown("Jump", controller) && controller.Grounded) // maybe double jump logic
         {
             animator.SetBool("isJumping", true);
             //Debug.Log("Set Vertical Movement " + jumpSpeed);

@@ -76,7 +76,7 @@ public static class Util {
     }
 
     private static Vector2 _oldRightJoystickInputVector;
-    public static float FindNearestEnemyToLine(Transform self)
+    public static float FindNearestEnemyToLine(Transform self, CharacterController2D player)
     {
         MultipleTargetCamera mtc = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MultipleTargetCamera>();
         string[] joystickNames = Input.GetJoystickNames();
@@ -84,8 +84,8 @@ public static class Util {
         joystickNamesList.Remove("");
         if (joystickNamesList != null && joystickNamesList.Count > 0)
         {
-            float horizontal = Input.GetAxis("JoystickHorizontal");
-            float vertical = Input.GetAxis("JoystickVertical");
+            float horizontal = InputManager.GetAxis("JoystickHorizontal", player);
+            float vertical = InputManager.GetAxis("JoystickVertical", player);
             
 
             Vector3 rayOrigin = self.position;
@@ -138,14 +138,14 @@ public static class Util {
                 _oldRightJoystickInputVector = new Vector2(horizontal, vertical);
                 _oldRightJoystickInputVector.Normalize(); 
             }
-            mtc.offset = new Vector3 (_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
+            //mtc.offset = new Vector3 (_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
             if (vectToEnemy.z > -10f)
             {
                 //something was set
 
                 return Mathf.Atan2(vectToEnemy.y, vectToEnemy.x) * Mathf.Rad2Deg;
             }
-            mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
+            //mtc.offset = new Vector3(_oldRightJoystickInputVector.x, _oldRightJoystickInputVector.y, -8);
             return Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
         } else
         {
@@ -160,13 +160,13 @@ public static class Util {
         return 0f;
     }
 
-    public static float GetArmAngle(Transform transform)
+    public static float GetArmAngle(Transform transform, CharacterController2D controller)
     {
         string[] joystickNames = Input.GetJoystickNames();
         if(joystickNames != null && joystickNames[0] != string.Empty)
         {
-            float horizontal = Input.GetAxis("JoystickHorizontal");
-            float vertical = Input.GetAxis("JoystickVertical");
+            float horizontal = InputManager.GetAxis("JoystickHorizontal", controller);
+            float vertical = InputManager.GetAxis("JoystickVertical", controller);
 
             _rightStickInputActive = Mathf.Abs(vertical) > 0.1f || Mathf.Abs(horizontal) > 0.1f;
             float angle = Mathf.Atan2(vertical, horizontal) * Mathf.Rad2Deg;
@@ -182,9 +182,9 @@ public static class Util {
     }
 
     static bool _lastInputAxisState; // true == down
-    public static bool GetAxisInputLikeOnKeyDown(string axisName)
+    public static bool GetAxisInputLikeOnKeyDown(string axisName, CharacterController2D controller)
     {
-        var currentInputValue = Input.GetAxis(axisName) > 0.1;
+        var currentInputValue = InputManager.GetAxis(axisName, controller) > 0.1;
 
         // prevent keep returning true when axis still pressed.
         if (currentInputValue && _lastInputAxisState)
@@ -198,9 +198,9 @@ public static class Util {
     }
 
     static bool lastAxisForKeyUp = false;
-    public static bool GetAxisInputLikeOnKeyUp(string axisName)
+    public static bool GetAxisInputLikeOnKeyUp(string axisName, CharacterController2D controller)
     {
-        var currentInputValue = Input.GetAxis(axisName) <= 0.1;
+        var currentInputValue = InputManager.GetAxis(axisName, controller) <= 0.1;
 
         if(!currentInputValue)
         {

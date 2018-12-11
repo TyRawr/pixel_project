@@ -6,6 +6,8 @@ public class WeaponManager : MonoBehaviour {
 
     public List<GameObject> weapons;
     private int _active_index;
+    [SerializeField]
+    CharacterController2D controller;
 	// Use this for initialization
 	void Start () {
 		
@@ -37,7 +39,7 @@ public class WeaponManager : MonoBehaviour {
             SetAllWeaponsInactive();
             SetWeaponAtIndexActive(2 - 1);
         }
-        if (Input.GetButtonDown("WeaponSwap"))
+        if (InputManager.GetButtonDown("WeaponSwap", controller))
         {
             int newIndex = ToggleWeaponIndex(_active_index) ;
             Debug.Log("WeaponSwap " + newIndex);

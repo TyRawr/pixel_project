@@ -15,6 +15,7 @@ public class CharacterController2D : MonoBehaviour
     Vector2 m_PreviousPosition = Vector2.zero;
     Vector2 m_CurrentPosition = Vector2.zero;
 
+    public int playerNumber;
     public Transform arm;
 
     const float k_GroundedRadius = .15f; // Radius of the overlap circle to determine if grounded
